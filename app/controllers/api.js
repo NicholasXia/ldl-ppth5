@@ -67,7 +67,7 @@ router.post('/upload_ppt', upload.single('ppt'), function(req, res, next) {
 
   if (req.file) {
     //权限处理
-    fs.chmod(req.file.path, 777, function (err) {
+    fs.chmod(req.file.path, 0777, function (err) {
       console.log(err);
       console.log('修改权限 ',req.file.path);
     });
