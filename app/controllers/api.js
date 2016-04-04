@@ -14,7 +14,7 @@ var storage = multer.diskStorage({
   },
   filename: function(req, file, cb) {
     console.log("file storage", file)
-    return cb(null, Date.now() + "-" + file.originalname);
+    return cb(null, Date.now() + "-" + file.originalname.replace('.pptx','').replace('.ppt',''));
   }
 })
 
