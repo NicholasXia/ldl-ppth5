@@ -1,0 +1,10 @@
+<% include header %>
+
+  <h1><%-title %></h1>
+  <p>欢迎来到 <%-title %></p>
+  <form  action="/api/upload_ppt" enctype="multipart/form-data" method="post">
+    <input type="text" name="title"><br>
+    <input type="file" name="ppt" multiple="multiple"><br>
+    <input type="submit" value="Upload">
+  </form>
+<% include footer %>
