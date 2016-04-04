@@ -70,7 +70,9 @@ router.post('/upload_ppt', upload.single('ppt'), function(req, res, next) {
     fs.chmod(req.file.path, 0777, function (err) {
       console.log(err);
       console.log('修改权限 ',req.file.path);
-      fs.rename(req.file.path, req.file.destination+"/"+Date.now()+"-"+req.file.originalname, function(){});
+      fs.rename(req.file.path, req.file.destination+"/"+Date.now()+"-"+req.file.originalname, function(){
+        fs.unlink(req.file.path,function(){});
+      });
     });
 
     var uploadFile = uploadFileModel();
