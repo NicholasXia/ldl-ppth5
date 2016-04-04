@@ -21,7 +21,8 @@ var check = function(cb) {
         if(stats!=null){//找到index
           //压缩
           var read = targz().createReadStream(dirpath);
-          var write = fs.createWriteStream(path+f.name+'.tar.gz');
+          console.log('tar.gz=',dirpath+f.name+'.tar.gz')
+          var write = fs.createWriteStream(dirpath+f.name+'.tar.gz');
           read.pipe(write);
 
           //POST回调地址
