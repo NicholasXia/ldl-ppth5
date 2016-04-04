@@ -12,7 +12,7 @@ var check = function(cb) {
   uploadFileModel.find({status:0}, function(err, docs) {
     docs.forEach(function(f){
       console.log(f);
-      var dirpath= h5path+f.name+"(Web)";
+      var dirpath= h5path+f.name+" (Web)";
       var filepath=dirpath+"/index.html";
       console.log('file path ='+filepath);
       fs.stat(filepath, function(err,stats){
