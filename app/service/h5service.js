@@ -4,7 +4,8 @@ var uploadFileModel = mongoose.model('UploadFile');
 var request=require('request');
 var zlib = require('zlib');
 var targz = require('tar.gz');
-var path = "uploads/h5/"
+var config=require('../../config/config');
+var path = config.upload.path;
 var check = function(cb) {
   var finalPath=__dirname.replace('app/service',"")+path;
   uploadFileModel.find({status:0}, function(err, docs) {

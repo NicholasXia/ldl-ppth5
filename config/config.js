@@ -8,6 +8,10 @@ var config = {
     app: {
       name: 'ldl-ppth5'
     },
+    upload:{
+      path:'uploads',
+      h5path:'uploads/h5/'
+    },
     port: 3000,
     db: 'mongodb://localhost/ldl-ppth5-development'
   },
@@ -17,6 +21,10 @@ var config = {
     app: {
       name: 'ldl-ppth5'
     },
+    upload:{
+      path:'uploads',
+      h5path:'uploads/h5'
+    },
     port: 3000,
     db: 'mongodb://localhost/ldl-ppth5-test'
   },
@@ -25,6 +33,10 @@ var config = {
     root: rootPath,
     app: {
       name: 'ldl-ppth5'
+    },
+    upload:{
+      path:'uploads',
+      h5path:'uploads/h5'
     },
     port: 3000,
     db: 'mongodb://localhost/ldl-ppth5-production'

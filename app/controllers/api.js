@@ -9,7 +9,7 @@ var uploadFileModel = mongoose.model('UploadFile');
 var h5service=require('../service/h5service');
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    return cb(null, 'uploads')
+    return cb(null, config.upload.path);
   },
   filename: function(req, file, cb) {
     console.log("file storage", file)
