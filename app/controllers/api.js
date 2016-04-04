@@ -70,7 +70,9 @@ router.post('/upload_ppt', upload.single('ppt'), function(req, res, next) {
     fs.chmod(req.file.path, 0777, function (err) {
       console.log(err);
       console.log('修改权限 ',req.file.path);
+      fs.rename(req.file.path, req.file.destination+"/"+Date.now()+"-"+req.file.originalname, function(){});
     });
+
     var uploadFile = uploadFileModel();
     uploadFile.name = req.file.filename.split('.')[0];
     uploadFile.ext = req.file.filename.split('.')[1];
