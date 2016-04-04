@@ -11,8 +11,8 @@ var check = function(cb) {
   uploadFileModel.find({status:0}, function(err, docs) {
     docs.forEach(function(f){
       console.log(f);
-      var dirpath= finalPath+f.name;
-      var filepath=finalPath+f.name+"/index.html";
+      var dirpath= finalPath+f.name+"(Web)";
+      var filepath=dirpath+"/index.html";
       console.log('file path ='+filepath);
       fs.stat(filepath, function(err,stats){
         console.log('stat err=',err);
