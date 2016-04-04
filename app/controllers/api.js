@@ -7,6 +7,7 @@ var multer = require('multer');
 var config = require('../../config/config');
 var uploadFileModel = mongoose.model('UploadFile');
 var h5service=require('../service/h5service');
+var fs=require('fs');
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
     return cb(null, config.upload.path);
@@ -65,6 +66,11 @@ router.post('/upload_ppt', upload.single('ppt'), function(req, res, next) {
   var json = {};
 
   if (req.file) {
+    //权限处理
+    fs.chmod(req.file.path, 777, function (err) {
+      console.log(err);
+      console.log('修改权限 ',req.file.path);
+    });
     var uploadFile = uploadFileModel();
     uploadFile.name = req.file.filename.split('.')[0];
     uploadFile.ext = req.file.filename.split('.')[1];
