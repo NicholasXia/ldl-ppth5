@@ -6,12 +6,13 @@ var zlib = require('zlib');
 var targz = require('tar.gz');
 var config=require('../../config/config');
 var path = config.upload.path;
+var h5path=config.upload.h5path;
 var check = function(cb) {
   var finalPath=__dirname.replace('app/service',"")+path;
   uploadFileModel.find({status:0}, function(err, docs) {
     docs.forEach(function(f){
       console.log(f);
-      var dirpath= finalPath+f.name+"(Web)";
+      var dirpath= h5path+f.name+"(Web)";
       var filepath=dirpath+"/index.html";
       console.log('file path ='+filepath);
       fs.stat(filepath, function(err,stats){
