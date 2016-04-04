@@ -67,12 +67,13 @@ router.post('/upload_ppt', upload.single('ppt'), function(req, res, next) {
 
   if (req.file) {
     //权限处理
-    var newfilename=req.file.destination+"/"+Date.now()+"-"+req.file.originalname;
+    var newfilename=Date.now()+"-"+req.file.originalname;
+
     fs.chmod(req.file.path, 0777, function (err) {
       console.log(err);
       console.log('修改权限 ',req.file.path);
 
-      fs.rename(req.file.path, newfilename, function(){
+      fs.rename(req.file.path, req.file.destination+"/"+newfilename, function(){
         fs.unlink(req.file.path,function(){});
       });
     });
@@ -80,6 +81,7 @@ router.post('/upload_ppt', upload.single('ppt'), function(req, res, next) {
     var uploadFile = uploadFileModel();
     uploadFile.name = newfilename.split('.')[0];
     uploadFile.ext = newfilename.split('.')[1];
+    uploadFile.path=req.file.destination+"/"+newfilename;
     uploadFile.date = new Date();
     uploadFile.status=0; //未转换
     uploadFile.save(function(err) {});
