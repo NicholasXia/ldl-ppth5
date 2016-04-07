@@ -20,6 +20,7 @@ var app = express();
 require('./config/express')(app, config);
 
 app.listen(config.port, function () {
+  global.PROJECT_URI=__dirname;
+  console.log('项目地址 ',global.PROJECT_URI);
   console.log('Express server listening on port ' + config.port);
 });
-
