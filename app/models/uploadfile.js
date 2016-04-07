@@ -6,6 +6,7 @@ var UploadFileSchema = new Schema({
   ext:String,
   path:String,
   status:Number, //0 上传成功 1 转换完成
+  callback_url:String,//单文件回调地址
   date: Date
 });
 
