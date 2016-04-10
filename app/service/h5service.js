@@ -26,12 +26,14 @@ var check = function(cb) {
           var newDirPath=h5path + f.name;
           fs.rename(dirpath, newDirPath, function(err){
             if (err) return console.error(err)
-            console.log("rename ldlh5 success!")
+            console.log("rename folder success!")
           });
 
           //Copy js
+          console.log('src ',global.PROJECT_URI+'/public/js/ldlh5.js');
+          console.log('dest ',newDirPath+"/ldlh5.js");
           fsExtra.copy(global.PROJECT_URI+'/public/js/ldlh5.js', newDirPath+"/ldlh5.js", function(err) {
-            if (err) return console.error(err)
+            if (err) return console.error('copy js ',err)
             console.log("copy ldlh5 success!")
           });
 
