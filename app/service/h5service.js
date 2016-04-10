@@ -23,49 +23,55 @@ var check = function(cb) {
         console.log('stat ', stats);
         if (stats != null) { //找到index
           //重命名
-          var newDirPath=h5path + f.name;
-          fs.rename(dirpath, newDirPath, function(err){
+          var newDirPath = h5path + f.name;
+          fs.rename(dirpath, newDirPath, function(err) {
             if (err) return console.error(err)
             console.log("rename folder success!")
           });
 
           //Copy js
-          console.log('src ',global.PROJECT_URI+'/public/js/ldlh5.js');
-          console.log('dest ',newDirPath+"/ldlh5.js");
-          fsExtra.copy(global.PROJECT_URI+'/public/js/ldlh5.js', newDirPath+"/ldlh5.js", function(err) {
-            if (err) return console.log('copy js ',err)
-            console.log("copy ldlh5 success!")
+          console.log('src ', global.PROJECT_URI + '/public/js/ldlh5.js');
+          console.log('dest ', newDirPath + "/ldlh5.js");
+          fsExtra.copy(global.PROJECT_URI + '/public/js/ldlh5.js', newDirPath + "/ldlh5.js", function(err) {
+            if (err) return console.log('copy js ', err)
+            console.log("copy ldlh5 success!");
+            //压缩
+            var read = targz().createReadStream(newDirPath);
+            console.log('tar.gz=', h5path + f.name + '.tar.gz')
+            var write = fs.createWriteStream(h5path + f.name + '.tar.gz');
+            read.pipe(write);
+            var zipName = f.name + '.tar.gz';
+            //POST回调地址
+            var callback_url = f.callback_url;
+            var form = {
+              name: f.name,
+              ext: f.ext,
+              date: f.date,
+              path_url: 'http://123.56.184.87:8000/' + zipName
+            }
+            //调用回调
+            request.post({
+              url: callback_url,
+              form: form
+            }, function(err, httpResponse, body) {
+              console.log('post 回调 ', body);
+            })
+
+            //更新状态
+            uploadFileModel.update({
+              _id: f.id
+            }, {
+              $set: {
+                status: 1
+              }
+            }, function(err, num) {});
+
+
           });
 
 
 
-          //压缩
-          var read = targz().createReadStream(newDirPath);
-          console.log('tar.gz=', h5path + f.name + '.tar.gz')
-          var write = fs.createWriteStream(h5path + f.name + '.tar.gz');
-          read.pipe(write);
-          var zipName=f.name + '.tar.gz';
-          //POST回调地址
-          var callback_url=f.callback_url;
-          var form={
-            name:f.name,
-            ext:f.ext,
-            date:f.date,
-            path_url:'http://123.56.184.87:8000/'+zipName
-          }
-          request.post({url:callback_url, form: form}, function(err,httpResponse,body){
-            console.log('post 回调 ',body);
-          })
 
-
-          //更新状态
-          uploadFileModel.update({
-            _id: f.id
-          }, {
-            $set: {
-              status: 1
-            }
-          }, function(err, num) {});
         } else {
           console.log(f.name + ' 没有完成');
         }
