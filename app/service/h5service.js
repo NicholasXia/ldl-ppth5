@@ -33,14 +33,14 @@ var check = function(cb) {
           console.log('src ',global.PROJECT_URI+'/public/js/ldlh5.js');
           console.log('dest ',newDirPath+"/ldlh5.js");
           fsExtra.copy(global.PROJECT_URI+'/public/js/ldlh5.js', newDirPath+"/ldlh5.js", function(err) {
-            if (err) return console.error('copy js ',err)
+            if (err) return console.log('copy js ',err)
             console.log("copy ldlh5 success!")
           });
 
 
 
           //压缩
-          var read = targz().createReadStream(dirpath);
+          var read = targz().createReadStream(newDirPath);
           console.log('tar.gz=', h5path + f.name + '.tar.gz')
           var write = fs.createWriteStream(h5path + f.name + '.tar.gz');
           read.pipe(write);
