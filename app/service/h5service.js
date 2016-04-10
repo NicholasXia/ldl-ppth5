@@ -22,8 +22,15 @@ var check = function(cb) {
         console.log('stat err=', err);
         console.log('stat ', stats);
         if (stats != null) { //找到index
+          //重命名
+          var newDirPath=h5path + f.name;
+          fs.rename(dirpath, newDirPath, function(err){
+            if (err) return console.error(err)
+            console.log("rename ldlh5 success!")
+          });
+
           //Copy js
-          fsExtra.copy(global.PROJECT_URI+'/public/js/ldlh5.js', dirpath+"/ldlh5", function(err) {
+          fsExtra.copy(global.PROJECT_URI+'/public/js/ldlh5.js', newDirPath+"/ldlh5.js", function(err) {
             if (err) return console.error(err)
             console.log("copy ldlh5 success!")
           });
