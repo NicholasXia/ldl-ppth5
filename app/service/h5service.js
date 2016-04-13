@@ -57,26 +57,26 @@ var check = function(cb) {
               console.log('tar.gz=', h5path + f.name + '.tar.gz');
               var write = fs.createWriteStream(h5path + f.name + '.tar.gz');
               read.pipe(write);
-              write.on('end', function() {
+              write.on('finish', function() {
                 console.log('压缩完成');
-
+                var zipName = f.name + '.tar.gz';
+                //POST回调地址
+                var callback_url = f.callback_url;
+                var form = {
+                    name: f.name,
+                    ext: f.ext,
+                    date: f.date,
+                    path_url: 'http://123.56.184.87:8000/' + zipName
+                  }
+                  //调用回调
+                request.post({
+                  url: callback_url,
+                  form: form
+                }, function(err, httpResponse, body) {
+                  console.log('post 回调 ', body);
+                });
               });
-              var zipName = f.name + '.tar.gz';
-              //POST回调地址
-              var callback_url = f.callback_url;
-              var form = {
-                  name: f.name,
-                  ext: f.ext,
-                  date: f.date,
-                  path_url: 'http://123.56.184.87:8000/' + zipName
-                }
-                //调用回调
-              request.post({
-                url: callback_url,
-                form: form
-              }, function(err, httpResponse, body) {
-                console.log('post 回调 ', body);
-              })
+
 
             // });
 
