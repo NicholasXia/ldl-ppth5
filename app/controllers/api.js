@@ -111,9 +111,6 @@ router.get('/test_check',function(req,res,next){
 
 router.get('/list',function(req,res,next){
   var display={
-    _id:0,
-    id:0,
-    name: 0,
     ext:0,
     path:0,
     status:0,
