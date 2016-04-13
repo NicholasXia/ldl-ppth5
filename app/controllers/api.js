@@ -109,6 +109,12 @@ router.get('/test_check',function(req,res,next){
   res.json({success:1});
 });
 
+router.get('/list',function(req,res,next){
+  uploadFileModel.find({status:1}).sort({date:-1},function(err,files){
+    return res.json(files);
+  });
+});
+
 function sec(req, res, next) {
   next();
 }
