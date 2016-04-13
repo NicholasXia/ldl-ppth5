@@ -44,52 +44,56 @@ var check = function(cb) {
           console.log('dest ', newDirPath + "/ldlh5.js");
 
 
-          fsExtra.copy(global.PROJECT_URI + '/public/js/ldlh5.js', newDirPath + "/ldlh5.js", function(err) {
-            if (err) return console.log('copy js ', err)
-            console.log("copy ldlh5 success!");
+          // fsExtra.copy(global.PROJECT_URI + '/public/js/ldlh5.js', newDirPath + "/ldlh5.js", function(err) {
+            // if (err) return console.log('copy js ', err)
+            // console.log("copy ldlh5 success!");
             //覆盖HTML
-            renderHTML(newDirPath + "/index.html", newDirPath + "/index.html", function(err) {
-              if (err) console.log('重写文件失败 ', err);
-              console.log('重写文件成功')
+            // renderHTML(newDirPath + "/index.html", newDirPath + "/index.html", function(err) {
+            //   if (err) console.log('重写文件失败 ', err);
+            //   console.log('重写文件成功')
 
               //压缩
               var read = targz().createReadStream(newDirPath);
-              console.log('tar.gz=', h5path + f.name + '.tar.gz')
+              console.log('tar.gz=', h5path + f.name + '.tar.gz');
               var write = fs.createWriteStream(h5path + f.name + '.tar.gz');
               read.pipe(write);
-              var zipName = f.name + '.tar.gz';
-              //POST回调地址
-              var callback_url = f.callback_url;
-              var form = {
-                  name: f.name,
-                  ext: f.ext,
-                  date: f.date,
-                  path_url: 'http://123.56.184.87:8000/' + zipName
-                }
-                //调用回调
-              request.post({
-                url: callback_url,
-                form: form
-              }, function(err, httpResponse, body) {
-                console.log('post 回调 ', body);
-              })
+              write.on('end', function() {
+                console.log('压缩完成');
+                var zipName = f.name + '.tar.gz';
+                //POST回调地址
+                var callback_url = f.callback_url;
+                var form = {
+                    name: f.name,
+                    ext: f.ext,
+                    date: f.date,
+                    path_url: 'http://123.56.184.87:8000/' + zipName
+                  }
+                  //调用回调
+                request.post({
+                  url: callback_url,
+                  form: form
+                }, function(err, httpResponse, body) {
+                  console.log('post 回调 ', body);
+                })
 
-              //更新状态
-              uploadFileModel.update({
-                _id: f.id
-              }, {
-                $set: {
-                  status: 1
-                }
-              }, function(err, num) {});
-
-            });
-
-
-
+                //更新状态
+                uploadFileModel.update({
+                  _id: f.id
+                }, {
+                  $set: {
+                    status: 1
+                  }
+                }, function(err, num) {});
+              });
 
 
-          });
+            // });
+
+
+
+
+
+          // });
 
         } else {
           console.log(f.name + ' 没有完成');
