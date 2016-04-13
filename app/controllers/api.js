@@ -110,8 +110,8 @@ router.get('/test_check',function(req,res,next){
 });
 
 router.get('/list',function(req,res,next){
-  uploadFileModel.find({status:1}).sort({date:-1},function(err,files){
-    return res.json(files);
+  uploadFileModel.find({status:1}).sort({date:-1}).exec(function(err,files){
+    res.json(files);
   });
 });
 

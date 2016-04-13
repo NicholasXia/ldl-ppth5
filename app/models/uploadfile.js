@@ -10,4 +10,8 @@ var UploadFileSchema = new Schema({
   date: Date
 });
 
+UploadFileSchema.set('toJSON',{virtuals:true});
+UploadFileSchema.virtual('url').get(function(){
+  return 'http://123.56.184.87:8000/'+this.name+".tar.gz";
+});
 mongoose.model('UploadFile', UploadFileSchema);
