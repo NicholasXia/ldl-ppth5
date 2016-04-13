@@ -59,33 +59,24 @@ var check = function(cb) {
               read.pipe(write);
               write.on('end', function() {
                 console.log('压缩完成');
-                var zipName = f.name + '.tar.gz';
-                //POST回调地址
-                var callback_url = f.callback_url;
-                var form = {
-                    name: f.name,
-                    ext: f.ext,
-                    date: f.date,
-                    path_url: 'http://123.56.184.87:8000/' + zipName
-                  }
-                  //调用回调
-                request.post({
-                  url: callback_url,
-                  form: form
-                }, function(err, httpResponse, body) {
-                  console.log('post 回调 ', body);
-                })
 
-                //更新状态
-                uploadFileModel.update({
-                  _id: f.id
-                }, {
-                  $set: {
-                    status: 1
-                  }
-                }, function(err, num) {});
               });
-
+              var zipName = f.name + '.tar.gz';
+              //POST回调地址
+              var callback_url = f.callback_url;
+              var form = {
+                  name: f.name,
+                  ext: f.ext,
+                  date: f.date,
+                  path_url: 'http://123.56.184.87:8000/' + zipName
+                }
+                //调用回调
+              request.post({
+                url: callback_url,
+                form: form
+              }, function(err, httpResponse, body) {
+                console.log('post 回调 ', body);
+              })
 
             // });
 
@@ -94,6 +85,14 @@ var check = function(cb) {
 
 
           // });
+          //更新状态
+          uploadFileModel.update({
+            _id: f.id
+          }, {
+            $set: {
+              status: 1
+            }
+          }, function(err, num) {});
 
         } else {
           console.log(f.name + ' 没有完成');
