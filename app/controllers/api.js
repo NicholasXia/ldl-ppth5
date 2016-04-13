@@ -117,7 +117,7 @@ router.get('/list',function(req,res,next){
     callback_url:0,
     date: 0
   }
-  uploadFileModel.find({status:1},display).sort({date:-1}).exec(function(err,files){
+  uploadFileModel.find({status:1},display).sort({date:-1}).limit(5).exec(function(err,files){
     res.json(files);
   });
 });
