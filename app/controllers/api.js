@@ -121,11 +121,38 @@ router.get('/list',function(req,res,next){
     res.json(files);
   });
 });
-
+var lastCount=0;
 router.get('/finish_count',function(req,res,next){
+  lastCount++;
   var status=req.query.status||1;
   uploadFileModel.count({status:status},function(err,count){
-    res.json({finish_count:count});
+    if(count==lastCount&&count!=0){//发送错误邮件
+      console.log('发送错误邮件');
+      var nodemailer = require('nodemailer');
+      var wellknown = require('nodemailer-wellknown');
+      var qqConfig = wellknown('QQ');
+      var transporter=nodemailer.createTransport({
+        service:'qq',
+        auth:{
+          'user':'3285685032@qq.com',
+          'pass':'xbspyjobjqjkdbdb',//gqggrvyfbxijcicj //uepmxlhraroddajh //xbspyjobjqjkdbdb
+        }
+      });
+      var mailOptions = {
+          from: '3285685032@qq.com', // sender address
+          to: '1520069327@qq.com', // list of receivers
+          subject: '拉多拉系统-转换错误通知', // Subject line
+          text: '很不幸，系统有可能报错了，请查看。'// plaintext bod
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+              return console.log(error);
+          }
+          console.log('Message sent: ' + info.response);
+      });
+    }
+    lastCount=count;
+    res.json({finish:count});
   });
 });
 

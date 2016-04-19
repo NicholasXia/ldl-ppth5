@@ -12,6 +12,10 @@ var config = {
       path:'uploads',
       h5path:'uploads/h5/'
     },
+    mail:{
+      user:'3285685032@qq.com',
+      pass:'123456'
+    },
     port: 3000,
     db: 'mongodb://localhost/ldl-ppth5-development'
   },
@@ -25,6 +29,10 @@ var config = {
       path:'uploads',
       h5path:'uploads/h5'
     },
+    mail:{
+      user:'3285685032@qq.com',
+      pass:'123456'
+    },
     port: 3000,
     db: 'mongodb://localhost/ldl-ppth5-test'
   },
@@ -37,6 +45,10 @@ var config = {
     upload:{
       path:'uploads',
       h5path:'uploads/h5'
+    },
+    mail:{
+      user:'3285685032@qq.com',
+      pass:'123456'
     },
     port: 3000,
     db: 'mongodb://localhost/ldl-ppth5-production'
