@@ -122,6 +122,13 @@ router.get('/list',function(req,res,next){
   });
 });
 
+router.get('/finish_count',function(req,res,next){
+  var status=req.query.status||1;
+  uploadFileModel.count({status:status},function(err,count){
+    res.json({finish_count:count});
+  });
+});
+
 function sec(req, res, next) {
   next();
 }
