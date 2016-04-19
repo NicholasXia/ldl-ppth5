@@ -24,24 +24,25 @@ var check = function(cb) {
     status: 0
   }, function(err, docs) {
     docs.forEach(function(f) {
-      console.log(f);
+      // console.log(f);
       var dirpath = h5path + f.name + " (Web)";
       var filepath = dirpath + "/index.html";
-      console.log('file path =' + filepath);
+      // console.log('file path =' + filepath);
       fs.stat(filepath, function(err, stats) {
-        console.log('stat err=', err);
-        console.log('stat ', stats);
+        // console.log('stat err=', err);
+        // console.log('stat ', stats);
         if (stats != null) { //找到index
           //重命名
           var newDirPath = h5path + f.name;
           fs.rename(dirpath, newDirPath, function(err) {
-            if (err) return console.error(err)
-            console.log("rename folder success!")
+            if (err) return
+            // console.error(err)
+            // console.log("rename folder success!")
           });
 
           //Copy js
-          console.log('src ', global.PROJECT_URI + '/public/js/ldlh5.js');
-          console.log('dest ', newDirPath + "/ldlh5.js");
+          // console.log('src ', global.PROJECT_URI + '/public/js/ldlh5.js');
+          // console.log('dest ', newDirPath + "/ldlh5.js");
 
 
           // fsExtra.copy(global.PROJECT_URI + '/public/js/ldlh5.js', newDirPath + "/ldlh5.js", function(err) {
