@@ -152,8 +152,13 @@ router.get('/finish_count',function(req,res,next){
       });
     }
     lastCount=count;
-    res.json({finish:count});
+    res.json({finish:count,lastCount:lastCount});
   });
+});
+
+router.get('/check_error',function(req,res,next){
+  h5service.checkError(function(){});
+  return res.json({success:1});
 });
 
 function sec(req, res, next) {

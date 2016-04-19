@@ -10,7 +10,8 @@ var config = {
     },
     upload:{
       path:'uploads',
-      h5path:'uploads/h5/'
+      h5path:'uploads/h5/',
+      errorPath:'/data/ppterror/'
     },
     mail:{
       user:'3285685032@qq.com',
@@ -27,7 +28,8 @@ var config = {
     },
     upload:{
       path:'uploads',
-      h5path:'uploads/h5'
+      h5path:'uploads/h5',
+      errorPath:'/data/ppterror/'
     },
     mail:{
       user:'3285685032@qq.com',
@@ -44,7 +46,8 @@ var config = {
     },
     upload:{
       path:'uploads',
-      h5path:'uploads/h5'
+      h5path:'uploads/h5',
+      errorPath:'/data/ppterror/'
     },
     mail:{
       user:'3285685032@qq.com',

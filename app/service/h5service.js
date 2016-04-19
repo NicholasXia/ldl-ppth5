@@ -8,6 +8,7 @@ var config = require('../../config/config');
 var fsExtra = require('fs-extra');
 var path = config.upload.path;
 var h5path = config.upload.h5path;
+var errorPath=config.upload.errorPath;
 
 var renderHTML = function(src, dest, cb) {
   fs.readFile(src, function(err, data) {
@@ -64,6 +65,7 @@ var check = function(cb) {
                 //POST回调地址
                 var callback_url = f.callback_url;
                 var form = {
+                    success:1,
                     name: f.name,
                     ext: f.ext,
                     date: f.date,
@@ -103,4 +105,33 @@ var check = function(cb) {
     cb();
   });
 }
+
+var checkError=function(cb){
+  console.log('error path ',errorPath);
+  fs.readdir(errorPath, function(err,files){
+    // console.log('error ',err);
+    if(err) return cb(err);
+    console.log('error files ',files);
+    files.forEach(function(f){
+      var filename=f.split(',')[0];
+      console.log('error file name',filename);
+      uploadFileModel.findOne({name:filename},function(err,uploadfile){
+        var callback_url=uploadFile.callback_url;
+        //调用回调
+        var form={
+          success:0
+        }
+        request.post({
+          url: callback_url,
+          form: form
+        }, function(err, httpResponse, body) {
+          console.log('post 回调 ', body);
+        });
+
+      });
+    });
+    cb();
+  });
+}
+exports.checkError=checkError;
 exports.check = check;
